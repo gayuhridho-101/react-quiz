@@ -3,6 +3,7 @@ import { cssWrapper } from './style';
 
 import Comp1 from "./Comp1";
 import Comp3 from "./Comp3";
+import { useEffect, useState } from 'react';
 
 const question = (
   <ul>
@@ -26,18 +27,31 @@ const question = (
 );
 
 const Test5 = () => {
+  const [number, setNumber] = useState(0);
+  const [lastInput, setLastInput] = useState(4);
+
+  const handleChangeNumber = (e) => {
+    setNumber(e.target.value);
+    setLastInput(e.target.value);
+  }
+
+  useEffect(() => {
+    setLastInput(number);
+  }, [number]);
+
+
   return(
     <div>
       {question}
-      <button id="numbermin" type="button">-</button>
-      <input id="mynumber" type="text" placeholder="input mynumber"/>
-      <button id="numberplus" type="button">+</button>
+      <button id="numbermin" type="button" onClick={() => setNumber(number => number - 1)}>-</button>
+      <input id="mynumber" type="text" placeholder="input mynumber" value={number} onChange={handleChangeNumber}/>
+      <button id="numberplus" type="button" onClick={() => setNumber(number => number + 1)}>+</button>
       <br/>
       <br/>
       <div className={cssWrapper}>
-        The inputted value is [ODD / EVEN]*
+        The inputted value is { number % 2 === 0 ? "EVEN" : "ODD" }
       </div>
-      <Comp1 />
+      <Comp1 lastInput={lastInput} setLastInput={setLastInput}/>
       <Comp3 />
     </div>
   )

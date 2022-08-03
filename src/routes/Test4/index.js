@@ -17,7 +17,7 @@ const Test4 = () => {
       </ul>
       <Input handleFilter={handleFilter}/>
       <div>
-        <Table keyword={keyword} />
+        <Table keyword={keyword}/>
       </div>
     </div>
   )
