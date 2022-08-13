@@ -1,6 +1,22 @@
+import { useContext, useState, useEffect } from "react";
+import { Filter } from "./context";
 import DATA from "./_data";
 
 const Table = () => {
+  const [data, setData] = useState([]);
+  const { stateFilter } = useContext(Filter);
+
+  useEffect(() => {
+    if (stateFilter) {
+      const filterData = DATA.filter((item) => {
+        return item.name === stateFilter;
+      });
+      setData(filterData);
+    } else {
+      setData(DATA);
+    }
+  }, [stateFilter]);
+
   return (
     <table>
       <thead>
@@ -11,16 +27,24 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        {DATA.map((eachrow, idx) => (
-          <tr key={idx}>
-            <td>{eachrow.name}</td>
-            <td>{eachrow.age}</td>
-            <td>{eachrow.address}</td>
+        {data?.length > 0 ? (
+          data.map((item, index) => {
+            return (
+              <tr key={index}>
+                <td>{item.name}</td>
+                <td>{item.age}</td>
+                <td>{item.address}</td>
+              </tr>
+            );
+          })
+        ) : (
+          <tr>
+            <td colSpan={3}>Data Not Found!!!</td>
           </tr>
-        ))}
+        )}
       </tbody>
     </table>
-  )
-}
+  );
+};
 
 export default Table;

@@ -8,6 +8,7 @@ export const cssSpace = css({
   alignItems: 'center',
   justifyContent: 'center',
   backgroundColor: 'black',
+  position: 'relative'
 });
 
 export const cssSun = css({
@@ -22,4 +23,7 @@ export const cssPlanet = () => css({
   height: 20,
   borderRadius: 10,
   backgroundColor: 'red',
+  position: 'absolute',
+  top: 50,
+  left: 50,
 });
