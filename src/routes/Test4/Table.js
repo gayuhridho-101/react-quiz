@@ -7,7 +7,7 @@ const Table = ({keyword}) => {
   useEffect(() => {
     if(keyword){
       const filterData = DATA.filter(item => {
-        return item.name === keyword;
+        return item.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1;;
       })
       setData(filterData)
     } else {

@@ -1,21 +1,26 @@
-import { useContext, useState, useEffect } from "react";
-import { Filter } from "./context";
+import { useImperativeHandle, forwardRef, useState, useEffect } from "react";
 import DATA from "./_data";
 
-const Table = () => {
+const Table = (props, ref) => {
   const [data, setData] = useState([]);
-  const { stateFilter } = useContext(Filter);
+  const [filter, setFilter] = useState("");
+
+  useImperativeHandle(ref, () => ({
+    filter: (val) => {
+      setFilter(val);
+    },
+  }));
 
   useEffect(() => {
-    if (stateFilter) {
+    if (filter) {
       const filterData = DATA.filter((item) => {
-        return item.name === stateFilter;
+        return item.name.toLowerCase().indexOf(filter.toLowerCase()) > -1;
       });
       setData(filterData);
     } else {
       setData(DATA);
     }
-  }, [stateFilter]);
+  }, [filter]);
 
   return (
     <table>
@@ -47,4 +52,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default forwardRef(Table);
